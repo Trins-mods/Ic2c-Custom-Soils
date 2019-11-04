@@ -28,7 +28,7 @@ public class SoilJsonLoader {
                         blockMeta = subObj.get("blockMeta").getAsInt();
                     }
                     if (blockMeta < 0 || blockMeta > 15){
-                        Ic2cCustomSoils.logger.info("Block meta can only be in the range of 0 - 15!");
+                        Ic2cCustomSoils.logger.info("Block " + blockName + " meta can only be in the range of 0 - 15!");
                         continue;
                     }
                     Block block = Block.getBlockFromName(blockName);
@@ -63,7 +63,7 @@ public class SoilJsonLoader {
                         blockMeta = subObj.get("blockMeta").getAsInt();
                     }
                     if (blockMeta < 0 || blockMeta > 15){
-                        Ic2cCustomSoils.logger.info("Block meta can only be in the range of 0 - 15!");
+                        Ic2cCustomSoils.logger.info("Block " + blockName +" meta can only be in the range of 0 - 15!");
                         continue;
                     }
                     Block block = Block.getBlockFromName(blockName);
@@ -78,6 +78,10 @@ public class SoilJsonLoader {
                     }
                     int humidity = subObj.get("humidity").getAsInt();
                     int nutrients = subObj.get("nutrient").getAsInt();
+                    if (nutrients < 0){
+                        Ic2cCustomSoils.logger.info("Block: " + blockName + "  cannot have nutrients less then 0 for farmland");
+                        continue;
+                    }
                     crops.registerFarmland(new FarmlandCustom(humidity, nutrients), blockState);
                 } catch (Exception e) {
                     e.printStackTrace();
