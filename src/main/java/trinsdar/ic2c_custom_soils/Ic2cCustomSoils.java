@@ -30,6 +30,9 @@ public class Ic2cCustomSoils {
     public void preInit(FMLPreInitializationEvent event){
         logger = event.getModLog();
         MinecraftForge.EVENT_BUS.register(this);
+        if (Ic2cCustomSoilsConfig.generateExampleJson){
+            JsonMaker.init(event);
+        }
     }
 
     @Mod.EventHandler
