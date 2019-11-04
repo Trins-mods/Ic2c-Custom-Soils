@@ -1,0 +1,16 @@
+[
+{
+   "modid": "ic2c_custom_soils",
+   "name": "Ic2c Custom Soils",
+   "description": "Mod allowing adding of custom soils to ic2 classic's crop system through json.",
+   "version": "${modversion}",
+   "mcversion": "${mcversion}",
+   "url": "",
+   "updateUrl": "",
+   "authorList": ["Trinsdar"],
+   "credits": "The Forge and FML guys, for making this example",
+   "logoFile": "",
+   "screenshots": [],
+   "dependencies": []
+ }
+ ]

@@ -1,0 +1,109 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+
+version = "${mod_version}"
+group = "trinsdar.ic2c_custom_soils" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "Ic2cCustomSoils"
+
+
+
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+    version = "${forgemc_version}-${forge_version}"
+    runDir = "run"
+    mappings = "${mappings_version}"
+
+    replace "@VERSION@", project.version
+    replaceIn "Ic2cCustomSoils.java"
+
+}
+
+repositories{
+    maven { // JEI
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven/'
+    }
+    maven { // The One Probe
+        name 'tterrag'
+        url 'http://maven.tterrag.com/'
+    }
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        name = "jared"
+        url = "http://maven.blamejared.com"
+    }
+    maven {
+        url "https://maven.chaosfield.at"
+    }
+    maven { url "http://maven.covers1624.net/" }
+    maven { url "http://chickenbones.net/maven/" }
+}
+
+dependencies {
+    deobfCompile "cofh:ThermalFoundation:${forgemc_version}+:universal@jar"
+    runtime "cofh:RedstoneFlux:1.12-2.1.+:universal@jar"
+    deobfCompile "cofh:CoFHCore:${forgemc_version}-4.6.+:universal@jar"
+    runtime "cofh:CoFHWorld:${forgemc_version}-1.+:universal@jar"
+    runtime "codechicken:CodeChickenLib:${mc_version}+:universal@jar"
+
+    deobfCompile "mekanism:Mekanism:${forgemc_version}:9.8.0.381"
+    
+    
+    deobfProvided "mezz.jei:jei_${forgemc_version}:${jei_version}:api"
+    runtime "mezz.jei:jei_${forgemc_version}:${jei_version}"
+    //one probe
+    deobfProvided "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}"
+    runtime "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}"
+
+    deobfCompile(group: 'CraftTweaker2', name: 'ZenScript', version: craft_tweaker_version) {
+        exclude group: 'org.ow2.asm'
+        exclude group: 'com.google.code.gson'
+    }
+    deobfCompile(group: 'CraftTweaker2', name: 'CraftTweaker2-API', version: craft_tweaker_version) {
+        exclude group: 'org.ow2.asm'
+        exclude group: 'com.google.code.gson'
+    }
+    deobfCompile(group: 'CraftTweaker2', name: 'CraftTweaker2-MC1120-Main', version: "1.12-${craft_tweaker_version}") {
+        exclude group: 'org.ow2.asm'
+        exclude group: 'com.google.code.gson'
+    }
+    deobfCompile "de.ellpeck.actuallyadditions:ActuallyAdditions:1.12.2-r144"
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "modversion", "${mod_version}"
+    inputs.property "mcversion", "${mc_version}"
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'modversion':"${mod_version}", 'mcversion':"${mc_version}"
+    }
+        
+    // copy everything else except the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
