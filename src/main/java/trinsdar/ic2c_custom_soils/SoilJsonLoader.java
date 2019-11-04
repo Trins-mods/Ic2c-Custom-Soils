@@ -27,7 +27,7 @@ public class SoilJsonLoader {
                     if (subObj.has("blockMeta")){
                         blockMeta = subObj.get("blockMeta").getAsInt();
                     }
-                    if (blockMeta < 0){
+                    if (blockMeta < 0 || blockMeta > 15){
                         continue;
                     }
                     Ic2Crops crops = Ic2Crops.instance;
