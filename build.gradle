@@ -2,11 +2,16 @@ buildscript {
     repositories {
         jcenter()
         maven { url = "http://files.minecraftforge.net/maven" }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath "com.wynprice.cursemaven:CurseMaven:2.1.0"
     }
 }
+apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
@@ -43,50 +48,15 @@ repositories{
         name 'tterrag'
         url 'http://maven.tterrag.com/'
     }
-    maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
-    }
-    maven {
-        name = "jared"
-        url = "http://maven.blamejared.com"
-    }
-    maven {
-        url "https://maven.chaosfield.at"
-    }
-    maven { url "http://maven.covers1624.net/" }
-    maven { url "http://chickenbones.net/maven/" }
 }
 
 dependencies {
-    deobfCompile "cofh:ThermalFoundation:${forgemc_version}+:universal@jar"
-    runtime "cofh:RedstoneFlux:1.12-2.1.+:universal@jar"
-    deobfCompile "cofh:CoFHCore:${forgemc_version}-4.6.+:universal@jar"
-    runtime "cofh:CoFHWorld:${forgemc_version}-1.+:universal@jar"
-    runtime "codechicken:CodeChickenLib:${mc_version}+:universal@jar"
-
-    deobfCompile "mekanism:Mekanism:${forgemc_version}:9.8.0.381"
-    
-    
     deobfProvided "mezz.jei:jei_${forgemc_version}:${jei_version}:api"
     runtime "mezz.jei:jei_${forgemc_version}:${jei_version}"
     //one probe
     deobfProvided "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}"
     runtime "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}"
-
-    deobfCompile(group: 'CraftTweaker2', name: 'ZenScript', version: craft_tweaker_version) {
-        exclude group: 'org.ow2.asm'
-        exclude group: 'com.google.code.gson'
-    }
-    deobfCompile(group: 'CraftTweaker2', name: 'CraftTweaker2-API', version: craft_tweaker_version) {
-        exclude group: 'org.ow2.asm'
-        exclude group: 'com.google.code.gson'
-    }
-    deobfCompile(group: 'CraftTweaker2', name: 'CraftTweaker2-MC1120-Main', version: "1.12-${craft_tweaker_version}") {
-        exclude group: 'org.ow2.asm'
-        exclude group: 'com.google.code.gson'
-    }
-    deobfCompile "de.ellpeck.actuallyadditions:ActuallyAdditions:1.12.2-r144"
+    compile "curse.maven:ic2-classic:2979877"
 }
 
 processResources {
